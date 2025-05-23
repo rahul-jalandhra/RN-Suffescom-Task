@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, FlatList, ActivityIndicator, View } from 'react-native'
+import { SafeAreaView, StyleSheet, FlatList, ActivityIndicator, View, Platform } from 'react-native'
 import React, { useCallback, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../store'
 import Header from '../../components/Header'
@@ -20,7 +20,7 @@ const HomeScreen = () => {
   }, [refreshCharacters])
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, paddingTop: Platform.OS === 'android' ? 30 : 0 }}>
       <Header />
       <FlatList
         data={loading ? [1, 2, 3, 4, 5, 6, 7, 8] as never : characters}
@@ -46,6 +46,7 @@ const HomeScreen = () => {
             </View>
           ) : null
         }
+        style={{ flex: 1 }}
         onEndReached={fetchMoreCharacters}
       />
     </SafeAreaView>

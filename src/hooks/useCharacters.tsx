@@ -27,8 +27,12 @@ const useCharacters = () => {
         if (!next) return
         try {
             dispatch(fetchMoreCharactersStart());
-            const result = await fetchCharacters(getParams(next))
-            dispatch(fetchMoreCharactersSuccess(result as never))
+            // This timeout is just to show next page loading, because the API is fast and we don't see the next page loading state ---->
+            setTimeout(async () => {
+                const result = await fetchCharacters(getParams(next))
+                dispatch(fetchMoreCharactersSuccess(result as never))
+            }, 1000);
+
         } catch (error) {
             dispatch(fetchCharactersFailure('Charaters are not fetched.'))
             console.error('Error fetching initial characters:', error);
